@@ -33,6 +33,9 @@ else:
     os.mkdir(dirname)
 dirname = "/"+dirname+"/"
 
+#Correction for windows filepaths
+dirname = dirname.replace("/", "\\")
+
 #Launch browser and navigate to ilboursa download page
 options = webdriver.ChromeOptions()
 prefs = {"download.default_directory" : os.path.dirname(os.path.realpath(__file__))+dirname}
