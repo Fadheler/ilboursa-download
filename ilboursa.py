@@ -34,7 +34,8 @@ else:
 dirname = "/"+dirname+"/"
 
 #Correction for windows filepaths
-dirname = dirname.replace("/", "\\")
+if os.name == "nt":
+    dirname = dirname.replace("/", "\\")
 
 #Launch browser and navigate to ilboursa download page
 options = webdriver.ChromeOptions()
