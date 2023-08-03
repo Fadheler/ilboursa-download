@@ -1,7 +1,7 @@
 # ilboursa-download
 
 ilBoursa allows you to download historical data but it is limited to 3 months date ranges.
-This tool can be used to automate downloading data for longer data ranges.
+This script can be used to automate downloading data for longer data ranges.
 Data is downloaded in chunks until reaching the specified end date (today's date if not specified)
 
 Requirements: python3, pandas, selenium, chromedriver
