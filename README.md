@@ -2,7 +2,7 @@
 
 A python tool to automate data download for date ranges longer than 3 months from ilboursa.com
 
-You need pandas and selenium
+Requirements: python3, pandas, selenium, chromedriver
 
 Usage:
 
