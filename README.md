@@ -6,12 +6,11 @@ Data is downloaded in chunks until reaching the specified end date (today's date
 
 Requirements: python, pandas, selenium, chromedriver
 
-https://medium.com/@patrick.yoho11/installing-selenium-and-chromedriver-on-windows-e02202ac2b08
-
 Usage:
-
-ilboursa.py TICKER START_DATE
-
-ilboursa.py TICKER START_DATE END_DATE
+import ilboursa
+ilboursa.quotes(ticker, start_date, end_date=datetime.strftime(datetime.now(), "%d/%m/%Y"), path=False)
 
 Date format: DD/MM/YYYY
+
+Installing chromedriver and selenium:
+https://medium.com/@patrick.yoho11/installing-selenium-and-chromedriver-on-windows-e02202ac2b08
