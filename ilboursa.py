@@ -39,7 +39,13 @@ if os.name == "nt":
 
 #Launch browser and navigate to ilboursa download page
 options = webdriver.ChromeOptions()
-prefs = {"download.default_directory" : os.path.dirname(os.path.realpath(__file__))+dirname}
+prefs = {
+  "download.default_directory" : os.path.dirname(os.path.realpath(__file__))+dirname,
+  "download.prompt_for_download": False,
+  "download.directory_upgrade": True,
+  "safebrowsing.enabled": True
+}
+
 options.add_experimental_option("prefs",prefs);
 driver = webdriver.Chrome(options = options)
 driver.get("https://www.ilboursa.com/marches/download/"+sys.argv[1])
@@ -62,7 +68,7 @@ while True:
     driver.execute_script("document.getElementById('dtFrom').setAttribute('value', '"+current_start.strftime("%Y-%m-%d")+"');")
     driver.execute_script("document.getElementById('dtTo').setAttribute('value', '"+current_stop.strftime("%Y-%m-%d")+"');")
     button.click()
-    
+    time.sleep(1)
     #Wait for file to appear in folder:
     while os.path.exists(dirname[1:]+"cotations_"+sys.argv[1]+".csv") == False:
         print("Waiting for CSV file download")
