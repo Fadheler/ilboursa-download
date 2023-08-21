@@ -21,6 +21,9 @@ def quotes(ticker, start_date, end_date=datetime.strftime(datetime.now(), "%d/%m
         dirname = path
 
     if os.path.exists(dirname):
+        if path != False:
+            print("Folder already exists")
+            return False
         for f in os.listdir(dirname):
             if not f.endswith(".csv"):
                 continue
@@ -67,10 +70,16 @@ def quotes(ticker, start_date, end_date=datetime.strftime(datetime.now(), "%d/%m
         button.click()
         time.sleep(1)
         #Wait for file to appear in folder:
+        current_wait = 0
         while os.path.exists(dirname[1:]+"cotations_"+ticker+".csv") == False:
             print("Waiting for CSV file download")
-            if 'La limite est de 3 mois' in driver.find_element(By.XPATH, "//body").text or 'Pas de données' in driver.find_element(By.XPATH, "//body").text:
-                current_stop = current_stop+relativedelta(days=-1)
+            current_wait += 1
+            if current_wait > 1 and "Pas de données disponibles pour les dates choisies" in driver.find_element(By.XPATH, "//body").text:
+                #End the fetch, stock out of exchange.
+                i -= 1
+                break
+            if 'La limite est de 3 mois' in driver.find_element(By.XPATH, "//body").text:
+                current_stop = current_stop+relativedelta(days=-5)
                 if current_start < current_stop:
                     print("Corrected dates: "+current_start.strftime("%Y-%m-%d")+" - "+current_stop.strftime("%Y-%m-%d"))
                     button = driver.find_element(By.XPATH, "//button[contains(@class, 'btnR')]")
@@ -82,7 +91,10 @@ def quotes(ticker, start_date, end_date=datetime.strftime(datetime.now(), "%d/%m
             time.sleep(1)
         time.sleep(1)
         #Rename generated file
-        os.rename(dirname[1:]+"cotations_"+ticker+".csv", dirname[1:]+"cotations_"+ticker+"_"+str(i)+".csv")
+        try:
+            os.rename(dirname[1:]+"cotations_"+ticker+".csv", dirname[1:]+"cotations_"+ticker+"_"+str(i)+".csv")
+        except Exception:
+            pass
         
         if current_stop < end_date:
             current_start = current_stop+relativedelta(days=+1)
