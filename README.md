@@ -8,6 +8,7 @@ Requirements: python, pandas, selenium, chromedriver
 
 Usage:
 import ilboursa
+
 ilboursa.quotes(ticker, start_date, end_date=datetime.strftime(datetime.now(), "%d/%m/%Y"), path=False)
 
 Date format: DD/MM/YYYY
